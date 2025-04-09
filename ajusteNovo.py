@@ -57,6 +57,11 @@ with open(file_b_path, newline='', encoding='utf-8-sig') as b_file:
         correct_date = row[date_idx_b].strip()
         code_date_map[code] = correct_date
 
+# Count rows in file A (excluding header)
+with open(file_a_path, newline='', encoding='utf-8-sig') as a_file:
+    total_rows = sum(1 for _ in a_file) - 1  # subtract header
+print(f"\n📊 file_a.csv contains {total_rows:,} data rows.\n")
+
 # Process file A in chunks
 with open(file_a_path, newline='', encoding='utf-8-sig') as a_file, \
      open('updated_file.csv', 'w', newline='', encoding='utf-8-sig') as output_file:
@@ -101,6 +106,7 @@ with open(file_a_path, newline='', encoding='utf-8-sig') as a_file, \
             buffer = []
 
         line_number += 1
+        chunk_count += 1
 
     # Write any remaining rows
     if buffer:
